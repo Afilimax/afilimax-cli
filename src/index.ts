@@ -19,7 +19,3 @@ export function main(argv: string[] = process.argv): void {
     const program = createProgram()
     program.parse(argv)
 }
-
-if (process.env.NODE_ENV !== "test" && !process.env.VITEST) {
-    main()
-}

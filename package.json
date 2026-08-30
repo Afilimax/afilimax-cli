@@ -19,11 +19,11 @@
     "!/**/__tests__"
   ],
   "bin": {
-    "afilimax": "./dist/index.js"
+    "afilimax": "./dist/afilimax.js"
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsx ./src/index.ts",
+    "dev": "tsx ./src/afilimax.ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "vitest",
