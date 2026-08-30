@@ -5,11 +5,11 @@
   "type": "commonjs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marcuthus/cli-template.git"
+    "url": "https://github.com/Afilimax/afilimax-cli.git"
   },
-  "homepage": "https://github.com/marcuthus/cli-template#readme",
+  "homepage": "https://github.com/Afilimax/afilimax-cli#readme",
   "bugs": {
-    "url": "https://github.com/marcuthus/cli-template/issues"
+    "url": "https://github.com/Afilimax/afilimax-cli/issues"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
