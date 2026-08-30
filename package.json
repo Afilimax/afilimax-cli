@@ -1,6 +1,6 @@
 {
-  "name": "cli",
-  "description": "CLI Template created by Marcuth",
+  "name": "@afilimax/cli",
+  "description": "CLI para geração de links de afiliados: Amazon, Mercado Livre, Shopee e AliExpress",
   "version": "0.1.0",
   "type": "commonjs",
   "repository": {
@@ -18,6 +18,9 @@
     "dist/*",
     "!/**/__tests__"
   ],
+  "bin": {
+    "afilimax": "./dist/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsx ./src/index.ts",
@@ -30,13 +33,20 @@
     "access": "public"
   },
   "keywords": [
-    "marcuth"
+    "afilimax",
+    "affiliate",
+    "amazon",
+    "mercado-livre",
+    "shopee",
+    "aliexpress",
+    "cli"
   ],
   "author": "Marcuth",
   "license": "MIT",
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^26.4.0",
+    "@types/readline-sync": "^1.4.8",
     "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^10.9.1",
     "eslint-config-prettier": "^10.1.8",
@@ -48,7 +58,13 @@
     "vitest": "^4.1.11"
   },
   "dependencies": {
+    "@afilimax/aliexpress-provider": "^0.1.0",
+    "@afilimax/amazon-browser-provider": "^0.1.0",
+    "@afilimax/core": "^0.4.1",
+    "@afilimax/mercado-livre-provider": "^0.1.3",
+    "@afilimax/shopee-provider": "^0.1.0",
     "commander": "^15.0.0",
+    "readline-sync": "^1.4.10",
     "winston": "^3.19.0"
   }
 }

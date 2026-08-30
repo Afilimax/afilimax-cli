@@ -11,47 +11,40 @@ function stripAnsi(str: string): string {
     return str.replace(/\x1b\[[0-9;]*m/g, "")
 }
 
-function makeBoxLine(content: string, width = 68): string {
+function makeBoxLine(content: string, width = 84): string {
     const visibleLength = stripAnsi(content).replace(/[\u{1F300}-\u{1F9FF}]/gu, "  ").length
     const padding = Math.max(0, width - visibleLength)
     return `${gray}│${reset} ${content}${" ".repeat(padding)} ${gray}│${reset}`
 }
 
-const boxWidth = 72
+const boxWidth = 84
 
 const topBorder = `${gray}╭${"─".repeat(boxWidth + 2)}╮${reset}`
 const emptyLine = `${gray}│${" ".repeat(boxWidth + 2)}│${reset}`
 const bottomBorder = `${gray}╰${"─".repeat(boxWidth + 2)}╯${reset}`
 
-const cliLine1 = makeBoxLine(`${orange}${bold}                          ██████╗ ██╗     ██╗${reset}`, boxWidth)
-const cliLine2 = makeBoxLine(`${orange}${bold}                         ██╔════╝ ██║     ██║${reset}`, boxWidth)
-const cliLine3 = makeBoxLine(`${orange}${bold}                         ██║      ██║     ██║${reset}`, boxWidth)
-const cliLine4 = makeBoxLine(`${orange}${bold}                         ██║      ██║     ██║${reset}`, boxWidth)
-const cliLine5 = makeBoxLine(`${orange}${bold}                         ╚██████╗ ███████╗██║${reset}`, boxWidth)
-const cliLine6 = makeBoxLine(`${orange}${bold}                          ╚═════╝ ╚══════╝╚═╝${reset}`, boxWidth)
-
-const templateLine1 = makeBoxLine(
-    `${orange}${bold} ████████╗███████╗███╗   ███╗██████╗ ██╗      █████╗ ████████╗███████╗${reset}`,
+const bannerLine1 = makeBoxLine(
+    `${orange}${bold} █████╗ ███████╗██╗██╗     ██╗███╗   ███╗ █████╗ ██╗  ██╗     ██████╗██╗     ██╗${reset}`,
     boxWidth,
 )
-const templateLine2 = makeBoxLine(
-    `${orange}${bold} ╚══██╔══╝██╔════╝████╗ ████║██╔══██╗██║     ██╔══██╗╚══██╔══╝██╔════╝${reset}`,
+const bannerLine2 = makeBoxLine(
+    `${orange}${bold}██╔══██╗██╔════╝██║██║     ██║████╗ ████║██╔══██╗╚██╗██╔╝    ██╔════╝██║     ██║${reset}`,
     boxWidth,
 )
-const templateLine3 = makeBoxLine(
-    `${orange}${bold}    ██║   █████╗  ██╔████╔██║██████╔╝██║     ███████║   ██║   █████╗  ${reset}`,
+const bannerLine3 = makeBoxLine(
+    `${orange}${bold}███████║█████╗  ██║██║     ██║██╔████╔██║███████║ ╚███╔╝     ██║     ██║     ██║${reset}`,
     boxWidth,
 )
-const templateLine4 = makeBoxLine(
-    `${orange}${bold}    ██║   ██╔══╝  ██║╚██╔╝██║██╔═══╝ ██║     ██╔══██║   ██║   ██╔══╝  ${reset}`,
+const bannerLine4 = makeBoxLine(
+    `${orange}${bold}██╔══██║██╔══╝  ██║██║     ██║██║╚██╔╝██║██╔══██║ ██╔██╗     ██║     ██║     ██║${reset}`,
     boxWidth,
 )
-const templateLine5 = makeBoxLine(
-    `${orange}${bold}    ██║   ███████╗██║ ╚═╝ ██║██║     ███████╗██║  ██║   ██║   ███████╗${reset}`,
+const bannerLine5 = makeBoxLine(
+    `${orange}${bold}██║  ██║██║     ██║███████╗██║██║ ╚═╝ ██║██║  ██║██╔╝ ██╗    ╚██████╗███████╗██║${reset}`,
     boxWidth,
 )
-const templateLine6 = makeBoxLine(
-    `${orange}${bold}    ╚═╝   ╚══════╝╚═╝     ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝${reset}`,
+const bannerLine6 = makeBoxLine(
+    `${orange}${bold}╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝${reset}`,
     boxWidth,
 )
 
@@ -60,24 +53,34 @@ const subLine = makeBoxLine(
     boxWidth,
 )
 
+const repoLine = makeBoxLine(
+    `  ${gray}Repo     :${reset} ${cyan}https://github.com/Afilimax/afilimax-cli${reset}`,
+    boxWidth,
+)
+const releasesLine = makeBoxLine(
+    `  ${gray}Releases :${reset} ${cyan}https://github.com/Afilimax/afilimax-cli/releases${reset}`,
+    boxWidth,
+)
+const issuesLine = makeBoxLine(
+    `  ${gray}Issues   :${reset} ${cyan}https://github.com/Afilimax/afilimax-cli/issues${reset}`,
+    boxWidth,
+)
+
 export const cliBanner = `
 ${topBorder}
 ${emptyLine}
-${cliLine1}
-${cliLine2}
-${cliLine3}
-${cliLine4}
-${cliLine5}
-${cliLine6}
-${emptyLine}
-${templateLine1}
-${templateLine2}
-${templateLine3}
-${templateLine4}
-${templateLine5}
-${templateLine6}
+${bannerLine1}
+${bannerLine2}
+${bannerLine3}
+${bannerLine4}
+${bannerLine5}
+${bannerLine6}
 ${emptyLine}
 ${subLine}
+${emptyLine}
+${repoLine}
+${releasesLine}
+${issuesLine}
 ${emptyLine}
 ${bottomBorder}
 `

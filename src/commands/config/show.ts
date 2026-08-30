@@ -1,0 +1,83 @@
+import { Command } from "commander"
+
+import { areCookiesValid, getCookiesEarliestExpiry, loadConfig } from "../../helpers/config.helper"
+import { logCard, logInfo, logJson } from "../../helpers/logger.helper"
+
+function maskSecret(secret?: string): string {
+    if (!secret) return "(não definido)"
+    if (secret.length <= 4) return "****"
+    return `${secret.slice(0, 3)}****${secret.slice(-3)}`
+}
+
+export const configShowCommand = new Command("show")
+    .alias("ls")
+    .description("Exibe a configuração atual de todas as plataformas de afiliados")
+    .option("--json", "Exibe a configuração em formato JSON")
+    .action((opts) => {
+        const config = loadConfig()
+
+        if (opts.json) {
+            logJson(config)
+            return
+        }
+
+        // Amazon
+        if (config.amazon?.cookies && config.amazon.cookies.length > 0) {
+            const isValid = areCookiesValid(config.amazon.cookies)
+            const expiry = getCookiesEarliestExpiry(config.amazon.cookies)
+            logCard("Amazon Associates", {
+                Status: isValid ? "Configurado (Válido)" : "Configurado (Cookies expirados)",
+                Cookies: `${config.amazon.cookies.length} cookie(s)`,
+                Expiração: expiry ? expiry.toLocaleDateString("pt-BR") : "Desconhecida",
+            })
+        } else {
+            logCard("Amazon Associates", {
+                Status: "Não configurado",
+            })
+        }
+
+        // Mercado Livre
+        if (config.mercadoLivre?.cookies && config.mercadoLivre.cookies.length > 0) {
+            const isValid = areCookiesValid(config.mercadoLivre.cookies)
+            const expiry = getCookiesEarliestExpiry(config.mercadoLivre.cookies)
+            logCard("Mercado Livre Afiliados", {
+                Status: isValid ? "Configurado (Válido)" : "Configurado (Cookies expirados)",
+                Tag: config.mercadoLivre.tag,
+                Cookies: `${config.mercadoLivre.cookies.length} cookie(s)`,
+                Expiração: expiry ? expiry.toLocaleDateString("pt-BR") : "Desconhecida",
+            })
+        } else {
+            logCard("Mercado Livre Afiliados", {
+                Status: "Não configurado",
+            })
+        }
+
+        // Shopee
+        if (config.shopee) {
+            const subIds = config.shopee.subIds ?? []
+            logCard("Shopee Afiliados", {
+                Status: "Configurado",
+                "App ID": config.shopee.appId,
+                "App Secret": maskSecret(config.shopee.appSecret),
+                "Sub IDs": subIds.length > 0 ? subIds.join(", ") : "(nenhum)",
+            })
+        } else {
+            logCard("Shopee Afiliados", {
+                Status: "Não configurado",
+            })
+        }
+
+        // AliExpress
+        if (config.aliexpress) {
+            logCard("AliExpress Open Platform", {
+                Status: "Configurado",
+                "App Key": config.aliexpress.appKey,
+                "App Secret": maskSecret(config.aliexpress.appSecret),
+                "Tracking ID": config.aliexpress.trackingId,
+            })
+        } else {
+            logCard("AliExpress Open Platform", {
+                Status: "Não configurado",
+            })
+        }
+    })

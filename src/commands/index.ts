@@ -1,2 +1,2 @@
-export { exampleCommand } from "./example/index"
-export { sumCommand } from "./sum/index"
+export { configCommand } from "./config/index"
+export { createCommand } from "./create/index"
