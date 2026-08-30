@@ -1,0 +1,49 @@
+{
+  "name": "cli",
+  "version": "0.1.0",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcuthus/cli-template.git"
+  },
+  "homepage": "https://github.com/marcuthus/cli-template#readme",
+  "bugs": {
+    "url": "https://github.com/marcuthus/cli-template/issues"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/*",
+    "!/**/__tests__"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node ./src/index.ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "test": "vitest",
+    "test:cov": "vitest run --coverage"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "marcuth"
+  ],
+  "author": "Marcuth",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^26.4.0",
+    "@vitest/coverage-v8": "^4.1.11",
+    "eslint": "^10.9.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "prettier": "^3.9.6",
+    "prettier-plugin-sort-imports": "^1.8.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
+  }
+}
