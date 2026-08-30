@@ -13,8 +13,6 @@ import { createMagazineLuizaCommand } from "./magazine-luiza"
 import { createMercadoLivreCommand } from "./mercado-livre"
 import { createShopeeCommand } from "./shopee"
 
-// ─── Domain Detection ─────────────────────────────────────────────────────────
-
 type Platform = "amazon" | "mercadoLivre" | "shopee" | "aliexpress" | "magazineLuiza"
 
 const platformDomains: Record<Platform, string[]> = {
@@ -35,13 +33,11 @@ function detectPlatform(url: string): Platform | null {
             }
         }
     } catch {
-        // invalid URL — will be handled downstream
+        // empty
     }
 
     return null
 }
-
-// ─── Auto-detect Action ───────────────────────────────────────────────────────
 
 async function autoCreateAffiliateUrl(url: string): Promise<void> {
     const platform = detectPlatform(url)
@@ -163,8 +159,6 @@ async function autoCreateAffiliateUrl(url: string): Promise<void> {
         }
     }
 }
-
-// ─── Command ──────────────────────────────────────────────────────────────────
 
 export const createCommand = new Command("create")
     .description("Gera um link de afiliado. Detecta a plataforma automaticamente, ou use um subcomando específico.")

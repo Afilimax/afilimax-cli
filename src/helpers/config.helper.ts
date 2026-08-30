@@ -2,13 +2,11 @@ import fs from "node:fs"
 import os from "node:os"
 import path from "node:path"
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
 export type Cookie = {
     name: string
     value: string
     domain?: string
-    expires?: number // Unix timestamp (seconds)
+    expires?: number
     [key: string]: unknown
 }
 
@@ -46,12 +44,8 @@ export type AfilimaxConfig = {
     magazineLuiza?: MagazineLuizaConfig
 }
 
-// ─── Config File Path ─────────────────────────────────────────────────────────
-
 const configDir = path.join(os.homedir(), ".afilimax")
 const configFilePath = path.join(configDir, "config.json")
-
-// ─── Core Functions ───────────────────────────────────────────────────────────
 
 export function loadConfig(): AfilimaxConfig {
     if (!fs.existsSync(configFilePath)) {
@@ -80,19 +74,12 @@ export function updateConfig(partial: Partial<AfilimaxConfig>): void {
     saveConfig(updated)
 }
 
-// ─── Cookie Validation ────────────────────────────────────────────────────────
-
-/**
- * Checks whether any cookie in the array is expired.
- * Returns true if all cookies with expiry dates are still valid (or have no expiry).
- */
 export function areCookiesValid(cookies: Cookie[]): boolean {
     if (!cookies || cookies.length === 0) return false
 
-    const now = Math.floor(Date.now() / 1000) // current time in seconds
+    const now = Math.floor(Date.now() / 1000)
 
     for (const cookie of cookies) {
-        // Some cookie formats use -1 or 0 to represent "session cookie" (no expiry)
         if (cookie.expires !== undefined && cookie.expires > 0 && cookie.expires < now) {
             return false
         }
@@ -101,9 +88,6 @@ export function areCookiesValid(cookies: Cookie[]): boolean {
     return true
 }
 
-/**
- * Returns the earliest expiry date of all cookies that have one, or null.
- */
 export function getCookiesEarliestExpiry(cookies: Cookie[]): Date | null {
     const expiryTimestamps = cookies.map((c) => c.expires).filter((e): e is number => typeof e === "number" && e > 0)
 

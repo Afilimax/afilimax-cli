@@ -1,7 +1,7 @@
 import { Command } from "commander"
 
 import { areCookiesValid, getCookiesEarliestExpiry, loadConfig } from "../../helpers/config.helper"
-import { logCard, logInfo, logJson } from "../../helpers/logger.helper"
+import { logCard, logJson } from "../../helpers/logger.helper"
 
 function maskSecret(secret?: string): string {
     if (!secret) return "(não definido)"
@@ -21,22 +21,20 @@ export const configShowCommand = new Command("show")
             return
         }
 
-        // Amazon
         if (config.amazon?.cookies && config.amazon.cookies.length > 0) {
             const isValid = areCookiesValid(config.amazon.cookies)
             const expiry = getCookiesEarliestExpiry(config.amazon.cookies)
-            logCard("Amazon Associates", {
+            logCard("Amazon Associados", {
                 Status: isValid ? "Configurado (Válido)" : "Configurado (Cookies expirados)",
                 Cookies: `${config.amazon.cookies.length} cookie(s)`,
                 Expiração: expiry ? expiry.toLocaleDateString("pt-BR") : "Desconhecida",
             })
         } else {
-            logCard("Amazon Associates", {
+            logCard("Amazon Associados", {
                 Status: "Não configurado",
             })
         }
 
-        // Mercado Livre
         if (config.mercadoLivre?.cookies && config.mercadoLivre.cookies.length > 0) {
             const isValid = areCookiesValid(config.mercadoLivre.cookies)
             const expiry = getCookiesEarliestExpiry(config.mercadoLivre.cookies)
@@ -52,7 +50,6 @@ export const configShowCommand = new Command("show")
             })
         }
 
-        // Shopee
         if (config.shopee) {
             const subIds = config.shopee.subIds ?? []
             logCard("Shopee Afiliados", {
@@ -67,7 +64,6 @@ export const configShowCommand = new Command("show")
             })
         }
 
-        // AliExpress
         if (config.aliexpress) {
             logCard("AliExpress Open Platform", {
                 Status: "Configurado",
@@ -81,11 +77,10 @@ export const configShowCommand = new Command("show")
             })
         }
 
-        // Magazine Luiza
         if (config.magazineLuiza?.cookies && config.magazineLuiza.cookies.length > 0) {
             const isValid = areCookiesValid(config.magazineLuiza.cookies)
             const expiry = getCookiesEarliestExpiry(config.magazineLuiza.cookies)
-            logCard("Magazine Luiza (Parceiro Magalu)", {
+            logCard("Magazine Luiza (Influenciador Magalu)", {
                 Status: isValid ? "Configurado (Válido)" : "Configurado (Cookies expirados)",
                 "Slug Afiliado": config.magazineLuiza.affiliateSlug,
                 Cookies: `${config.magazineLuiza.cookies.length} cookie(s)`,

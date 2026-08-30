@@ -28,7 +28,7 @@ async function waitForUserLogin(page: import("puppeteer").Page): Promise<void> {
             const text: string = await page.$eval(LOGIN_INDICATOR_SELECTOR, (el) => el.textContent ?? "")
             if (text.includes(LOGIN_DONE_TEXT)) return
         } catch {
-            /* element not yet rendered */
+            // empty
         }
     }
 
