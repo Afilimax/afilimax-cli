@@ -47,6 +47,37 @@ export type AfilimaxConfig = {
 const configDir = path.join(os.homedir(), ".afilimax")
 const configFilePath = path.join(configDir, "config.json")
 
+const ESSENTIAL_COOKIES: Record<string, string[]> = {
+    amazon: [
+        "at-acbbr",
+        "at-main",
+        "ubid-acbbr",
+        "ubid-main",
+        "sess-at-acbbr",
+        "sess-at-main",
+        "session-id",
+        "session-token",
+    ],
+    mercadoLivre: ["ssid", "orgnickp", "orguserid", "cp", "ftid"],
+    magazineLuiza: ["sessionid", "pmd_promoter"],
+}
+
+function getEssentialCookies(cookies: Cookie[], platform?: string): Cookie[] {
+    if (!cookies || cookies.length === 0) return []
+
+    let targetNames: string[] = []
+
+    if (platform && ESSENTIAL_COOKIES[platform]) {
+        targetNames = ESSENTIAL_COOKIES[platform]
+    } else {
+        targetNames = Object.values(ESSENTIAL_COOKIES).flat()
+    }
+
+    const filtered = cookies.filter((c) => targetNames.some((name) => c.name.toLowerCase() === name.toLowerCase()))
+
+    return filtered.length > 0 ? filtered : cookies
+}
+
 export function loadConfig(): AfilimaxConfig {
     if (!fs.existsSync(configFilePath)) {
         return {}
@@ -74,12 +105,13 @@ export function updateConfig(partial: Partial<AfilimaxConfig>): void {
     saveConfig(updated)
 }
 
-export function areCookiesValid(cookies: Cookie[]): boolean {
+export function areCookiesValid(cookies: Cookie[], platform?: string): boolean {
     if (!cookies || cookies.length === 0) return false
 
     const now = Math.floor(Date.now() / 1000)
+    const essential = getEssentialCookies(cookies, platform)
 
-    for (const cookie of cookies) {
+    for (const cookie of essential) {
         if (cookie.expires !== undefined && cookie.expires > 0 && cookie.expires < now) {
             return false
         }
@@ -88,8 +120,11 @@ export function areCookiesValid(cookies: Cookie[]): boolean {
     return true
 }
 
-export function getCookiesEarliestExpiry(cookies: Cookie[]): Date | null {
-    const expiryTimestamps = cookies.map((c) => c.expires).filter((e): e is number => typeof e === "number" && e > 0)
+export function getCookiesEarliestExpiry(cookies: Cookie[], platform?: string): Date | null {
+    if (!cookies || cookies.length === 0) return null
+
+    const essential = getEssentialCookies(cookies, platform)
+    const expiryTimestamps = essential.map((c) => c.expires).filter((e): e is number => typeof e === "number" && e > 0)
 
     if (expiryTimestamps.length === 0) return null
 

@@ -16,8 +16,8 @@ export const createAmazonCommand = new Command("amazon")
             process.exit(1)
         }
 
-        if (!areCookiesValid(config.amazon.cookies)) {
-            const expiry = getCookiesEarliestExpiry(config.amazon.cookies)
+        if (!areCookiesValid(config.amazon.cookies, "amazon")) {
+            const expiry = getCookiesEarliestExpiry(config.amazon.cookies, "amazon")
             logError(
                 `Os cookies da Amazon estão expirados${expiry ? ` (desde ${expiry.toLocaleDateString("pt-BR")})` : ""}. Execute: afilimax config amazon`,
             )

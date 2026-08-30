@@ -33,8 +33,8 @@ function promptCollectionMethod(): "extension" | "browser" {
 export async function runAmazonConfig(): Promise<void> {
     const config = loadConfig()
 
-    if (config.amazon?.cookies && areCookiesValid(config.amazon.cookies)) {
-        const expiry = getCookiesEarliestExpiry(config.amazon.cookies)
+    if (config.amazon?.cookies && areCookiesValid(config.amazon.cookies, "amazon")) {
+        const expiry = getCookiesEarliestExpiry(config.amazon.cookies, "amazon")
         logWarning(
             `Amazon já configurado. Cookies válidos${expiry ? ` até ${expiry.toLocaleDateString("pt-BR")}` : ""}.`,
         )
@@ -51,8 +51,8 @@ export async function runAmazonConfig(): Promise<void> {
     try {
         const cookies = method === "extension" ? collectCookiesViaExtension() : await collectCookiesViaBrowser()
 
-        if (!areCookiesValid(cookies)) {
-            logWarning("Alguns cookies já estão expirados. A geração de links pode falhar.")
+        if (!areCookiesValid(cookies, "amazon")) {
+            logWarning("Alguns cookies principais estão expirados. A geração de links pode falhar.")
         }
 
         updateConfig({ amazon: { cookies } })

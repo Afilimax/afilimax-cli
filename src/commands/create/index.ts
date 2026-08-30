@@ -58,8 +58,8 @@ async function autoCreateAffiliateUrl(url: string): Promise<void> {
                 logError("Amazon não configurado. Execute: afilimax config amazon")
                 process.exit(1)
             }
-            if (!areCookiesValid(config.amazon.cookies)) {
-                const expiry = getCookiesEarliestExpiry(config.amazon.cookies)
+            if (!areCookiesValid(config.amazon.cookies, "amazon")) {
+                const expiry = getCookiesEarliestExpiry(config.amazon.cookies, "amazon")
                 logError(
                     `Cookies da Amazon expirados${expiry ? ` (desde ${expiry.toLocaleDateString("pt-BR")})` : ""}. Execute: afilimax config amazon`,
                 )
@@ -81,8 +81,8 @@ async function autoCreateAffiliateUrl(url: string): Promise<void> {
                 logError("Mercado Livre não configurado. Execute: afilimax config mercado-livre")
                 process.exit(1)
             }
-            if (!areCookiesValid(config.mercadoLivre.cookies)) {
-                const expiry = getCookiesEarliestExpiry(config.mercadoLivre.cookies)
+            if (!areCookiesValid(config.mercadoLivre.cookies, "mercadoLivre")) {
+                const expiry = getCookiesEarliestExpiry(config.mercadoLivre.cookies, "mercadoLivre")
                 logError(
                     `Cookies do Mercado Livre expirados${expiry ? ` (desde ${expiry.toLocaleDateString("pt-BR")})` : ""}. Execute: afilimax config mercado-livre`,
                 )
@@ -140,8 +140,8 @@ async function autoCreateAffiliateUrl(url: string): Promise<void> {
                 logError("Magazine Luiza não configurado. Execute: afilimax config magazine-luiza")
                 process.exit(1)
             }
-            if (!areCookiesValid(config.magazineLuiza.cookies)) {
-                const expiry = getCookiesEarliestExpiry(config.magazineLuiza.cookies)
+            if (!areCookiesValid(config.magazineLuiza.cookies, "magazineLuiza")) {
+                const expiry = getCookiesEarliestExpiry(config.magazineLuiza.cookies, "magazineLuiza")
                 logError(
                     `Cookies do Magazine Luiza expirados${expiry ? ` (desde ${expiry.toLocaleDateString("pt-BR")})` : ""}. Execute: afilimax config magazine-luiza`,
                 )

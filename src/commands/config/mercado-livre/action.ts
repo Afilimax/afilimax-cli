@@ -37,8 +37,8 @@ function promptCollectionMethod(): "extension" | "browser" {
 export async function runMercadoLivreConfig(): Promise<void> {
     const config = loadConfig()
 
-    if (config.mercadoLivre?.cookies && areCookiesValid(config.mercadoLivre.cookies)) {
-        const expiry = getCookiesEarliestExpiry(config.mercadoLivre.cookies)
+    if (config.mercadoLivre?.cookies && areCookiesValid(config.mercadoLivre.cookies, "mercadoLivre")) {
+        const expiry = getCookiesEarliestExpiry(config.mercadoLivre.cookies, "mercadoLivre")
         logWarning(
             `Mercado Livre já configurado (tag: ${config.mercadoLivre.tag}). Cookies válidos${expiry ? ` até ${expiry.toLocaleDateString("pt-BR")}` : ""}.`,
         )
@@ -62,8 +62,8 @@ export async function runMercadoLivreConfig(): Promise<void> {
     try {
         const cookies = method === "extension" ? collectCookiesViaExtension() : await collectCookiesViaBrowser()
 
-        if (!areCookiesValid(cookies)) {
-            logWarning("Alguns cookies já estão expirados. A geração de links pode falhar.")
+        if (!areCookiesValid(cookies, "mercadoLivre")) {
+            logWarning("Alguns cookies principais estão expirados. A geração de links pode falhar.")
         }
 
         updateConfig({ mercadoLivre: { tag, cookies } })

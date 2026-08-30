@@ -18,8 +18,8 @@ export const createMagazineLuizaCommand = new Command("magazine-luiza")
             process.exit(1)
         }
 
-        if (!areCookiesValid(config.magazineLuiza.cookies)) {
-            const expiry = getCookiesEarliestExpiry(config.magazineLuiza.cookies)
+        if (!areCookiesValid(config.magazineLuiza.cookies, "magazineLuiza")) {
+            const expiry = getCookiesEarliestExpiry(config.magazineLuiza.cookies, "magazineLuiza")
             logError(
                 `Os cookies do Magazine Luiza estão expirados${expiry ? ` (desde ${expiry.toLocaleDateString("pt-BR")})` : ""}. Execute: afilimax config magazine-luiza`,
             )

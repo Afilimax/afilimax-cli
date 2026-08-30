@@ -37,8 +37,8 @@ function promptCollectionMethod(): "extension" | "browser" {
 export async function runMagazineLuizaConfig(): Promise<void> {
     const config = loadConfig()
 
-    if (config.magazineLuiza?.cookies && areCookiesValid(config.magazineLuiza.cookies)) {
-        const expiry = getCookiesEarliestExpiry(config.magazineLuiza.cookies)
+    if (config.magazineLuiza?.cookies && areCookiesValid(config.magazineLuiza.cookies, "magazineLuiza")) {
+        const expiry = getCookiesEarliestExpiry(config.magazineLuiza.cookies, "magazineLuiza")
         logWarning(
             `Magazine Luiza já configurado (slug: ${config.magazineLuiza.affiliateSlug}). Cookies válidos${expiry ? ` até ${expiry.toLocaleDateString("pt-BR")}` : ""}.`,
         )
@@ -62,8 +62,8 @@ export async function runMagazineLuizaConfig(): Promise<void> {
     try {
         const cookies = method === "extension" ? collectCookiesViaExtension() : await collectCookiesViaBrowser()
 
-        if (!areCookiesValid(cookies)) {
-            logWarning("Alguns cookies já estão expirados. A geração de links pode falhar.")
+        if (!areCookiesValid(cookies, "magazineLuiza")) {
+            logWarning("Alguns cookies principais estão expirados. A geração de links pode falhar.")
         }
 
         updateConfig({ magazineLuiza: { affiliateSlug, cookies } })

@@ -16,8 +16,8 @@ export const createMercadoLivreCommand = new Command("mercado-livre")
             process.exit(1)
         }
 
-        if (!areCookiesValid(config.mercadoLivre.cookies)) {
-            const expiry = getCookiesEarliestExpiry(config.mercadoLivre.cookies)
+        if (!areCookiesValid(config.mercadoLivre.cookies, "mercadoLivre")) {
+            const expiry = getCookiesEarliestExpiry(config.mercadoLivre.cookies, "mercadoLivre")
             logError(
                 `Os cookies do Mercado Livre estão expirados${expiry ? ` (desde ${expiry.toLocaleDateString("pt-BR")})` : ""}. Execute: afilimax config mercado-livre`,
             )

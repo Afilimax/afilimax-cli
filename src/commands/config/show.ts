@@ -22,8 +22,8 @@ export const configShowCommand = new Command("show")
         }
 
         if (config.amazon?.cookies && config.amazon.cookies.length > 0) {
-            const isValid = areCookiesValid(config.amazon.cookies)
-            const expiry = getCookiesEarliestExpiry(config.amazon.cookies)
+            const isValid = areCookiesValid(config.amazon.cookies, "amazon")
+            const expiry = getCookiesEarliestExpiry(config.amazon.cookies, "amazon")
             logCard("Amazon Associados", {
                 Status: isValid ? "Configurado (Válido)" : "Configurado (Cookies expirados)",
                 Cookies: `${config.amazon.cookies.length} cookie(s)`,
@@ -36,8 +36,8 @@ export const configShowCommand = new Command("show")
         }
 
         if (config.mercadoLivre?.cookies && config.mercadoLivre.cookies.length > 0) {
-            const isValid = areCookiesValid(config.mercadoLivre.cookies)
-            const expiry = getCookiesEarliestExpiry(config.mercadoLivre.cookies)
+            const isValid = areCookiesValid(config.mercadoLivre.cookies, "mercadoLivre")
+            const expiry = getCookiesEarliestExpiry(config.mercadoLivre.cookies, "mercadoLivre")
             logCard("Mercado Livre Afiliados", {
                 Status: isValid ? "Configurado (Válido)" : "Configurado (Cookies expirados)",
                 Tag: config.mercadoLivre.tag,
@@ -78,8 +78,8 @@ export const configShowCommand = new Command("show")
         }
 
         if (config.magazineLuiza?.cookies && config.magazineLuiza.cookies.length > 0) {
-            const isValid = areCookiesValid(config.magazineLuiza.cookies)
-            const expiry = getCookiesEarliestExpiry(config.magazineLuiza.cookies)
+            const isValid = areCookiesValid(config.magazineLuiza.cookies, "magazineLuiza")
+            const expiry = getCookiesEarliestExpiry(config.magazineLuiza.cookies, "magazineLuiza")
             logCard("Magazine Luiza (Influenciador Magalu)", {
                 Status: isValid ? "Configurado (Válido)" : "Configurado (Cookies expirados)",
                 "Slug Afiliado": config.magazineLuiza.affiliateSlug,
