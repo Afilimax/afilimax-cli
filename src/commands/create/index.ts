@@ -1,5 +1,6 @@
 import { AliExpressProvider } from "@afilimax/aliexpress-provider"
 import { AmazonBrowserProvider } from "@afilimax/amazon-browser-provider"
+import { MagazineLuizaProvider } from "@afilimax/magazine-luiza-provider"
 import { MercadoLivreProvider } from "@afilimax/mercado-livre-provider"
 import { ShopeeProvider } from "@afilimax/shopee-provider"
 import { Command } from "commander"
@@ -8,18 +9,20 @@ import { areCookiesValid, getCookiesEarliestExpiry, loadConfig } from "../../hel
 import { logError, logInfo, logSuccess } from "../../helpers/logger.helper"
 import { createAliExpressCommand } from "./aliexpress"
 import { createAmazonCommand } from "./amazon"
+import { createMagazineLuizaCommand } from "./magazine-luiza"
 import { createMercadoLivreCommand } from "./mercado-livre"
 import { createShopeeCommand } from "./shopee"
 
 // ─── Domain Detection ─────────────────────────────────────────────────────────
 
-type Platform = "amazon" | "mercadoLivre" | "shopee" | "aliexpress"
+type Platform = "amazon" | "mercadoLivre" | "shopee" | "aliexpress" | "magazineLuiza"
 
 const platformDomains: Record<Platform, string[]> = {
     amazon: ["amazon.com.br", "a.co", "amzn.to"],
     mercadoLivre: ["mercadolivre.com.br", "mercadolibre.com", "meli.la"],
     shopee: ["shopee.com.br", "shopee.com", "sho.pe", "shp.ee"],
     aliexpress: ["aliexpress.com"],
+    magazineLuiza: ["magazineluiza.com.br", "magalu.com.br", "mglu.is", "parceiromagalu.com.br"],
 }
 
 function detectPlatform(url: string): Platform | null {
@@ -45,7 +48,7 @@ async function autoCreateAffiliateUrl(url: string): Promise<void> {
 
     if (!platform) {
         logError(
-            `Não foi possível detectar a plataforma para: ${url}\n  Tente: afilimax create amazon|mercado-livre|shopee|aliexpress <url>`,
+            `Não foi possível detectar a plataforma para: ${url}\n  Tente: afilimax create amazon|mercado-livre|shopee|aliexpress|magazine-luiza <url>`,
         )
         process.exit(1)
     }
@@ -135,6 +138,29 @@ async function autoCreateAffiliateUrl(url: string): Promise<void> {
             console.log(`\n  🔗 ${aliUrl}\n`)
             break
         }
+
+        case "magazineLuiza": {
+            if (!config.magazineLuiza?.cookies?.length) {
+                logError("Magazine Luiza não configurado. Execute: afilimax config magazine-luiza")
+                process.exit(1)
+            }
+            if (!areCookiesValid(config.magazineLuiza.cookies)) {
+                const expiry = getCookiesEarliestExpiry(config.magazineLuiza.cookies)
+                logError(
+                    `Cookies do Magazine Luiza expirados${expiry ? ` (desde ${expiry.toLocaleDateString("pt-BR")})` : ""}. Execute: afilimax config magazine-luiza`,
+                )
+                process.exit(1)
+            }
+            logInfo("Gerando link Magazine Luiza...")
+            const magaluProvider = new MagazineLuizaProvider({
+                affiliateSlug: config.magazineLuiza.affiliateSlug,
+                cookies: config.magazineLuiza.cookies as any,
+            })
+            const magaluUrl = await magaluProvider.createAffiliateUrl(url)
+            logSuccess("Link gerado com sucesso!")
+            console.log(`\n  🔗 ${magaluUrl}\n`)
+            break
+        }
     }
 }
 
@@ -142,7 +168,7 @@ async function autoCreateAffiliateUrl(url: string): Promise<void> {
 
 export const createCommand = new Command("create")
     .description("Gera um link de afiliado. Detecta a plataforma automaticamente, ou use um subcomando específico.")
-    .argument("[url]", "URL do produto (Amazon, Mercado Livre, Shopee ou AliExpress)")
+    .argument("[url]", "URL do produto (Amazon, Mercado Livre, Shopee, AliExpress ou Magazine Luiza)")
     .action(async (url?: string) => {
         if (!url) {
             createCommand.help()
@@ -160,3 +186,4 @@ export const createCommand = new Command("create")
     .addCommand(createMercadoLivreCommand)
     .addCommand(createShopeeCommand)
     .addCommand(createAliExpressCommand)
+    .addCommand(createMagazineLuizaCommand)

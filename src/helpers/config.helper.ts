@@ -33,11 +33,17 @@ export type AliExpressConfig = {
     trackingId: string
 }
 
+export type MagazineLuizaConfig = {
+    affiliateSlug: string
+    cookies: Cookie[]
+}
+
 export type AfilimaxConfig = {
     amazon?: AmazonConfig
     mercadoLivre?: MercadoLivreConfig
     shopee?: ShopeeConfig
     aliexpress?: AliExpressConfig
+    magazineLuiza?: MagazineLuizaConfig
 }
 
 // ─── Config File Path ─────────────────────────────────────────────────────────

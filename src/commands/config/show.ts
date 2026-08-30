@@ -80,4 +80,20 @@ export const configShowCommand = new Command("show")
                 Status: "Não configurado",
             })
         }
+
+        // Magazine Luiza
+        if (config.magazineLuiza?.cookies && config.magazineLuiza.cookies.length > 0) {
+            const isValid = areCookiesValid(config.magazineLuiza.cookies)
+            const expiry = getCookiesEarliestExpiry(config.magazineLuiza.cookies)
+            logCard("Magazine Luiza (Parceiro Magalu)", {
+                Status: isValid ? "Configurado (Válido)" : "Configurado (Cookies expirados)",
+                "Slug Afiliado": config.magazineLuiza.affiliateSlug,
+                Cookies: `${config.magazineLuiza.cookies.length} cookie(s)`,
+                Expiração: expiry ? expiry.toLocaleDateString("pt-BR") : "Desconhecida",
+            })
+        } else {
+            logCard("Magazine Luiza (Parceiro Magalu)", {
+                Status: "Não configurado",
+            })
+        }
     })

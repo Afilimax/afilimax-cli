@@ -53,6 +53,7 @@ npx @afilimax/cli --help
 | **Mercado Livre Afiliados** | Tag/Slug do Afiliado + Cookies | Extensão do Chrome *(recomendado)* ou Login em Navegador |
 | **Shopee Afiliados** | App ID + App Secret (+ Sub IDs opcionais) | Parâmetros de linha de comando |
 | **AliExpress Open Platform** | App Key + App Secret + Tracking ID | Parâmetros de linha de comando |
+| **Magazine Luiza (Parceiro Magalu)** | Slug do Afiliado + Cookies | Extensão do Chrome *(recomendado)* ou Login em Navegador |
 
 ---
 
@@ -81,6 +82,9 @@ afilimax create shopee <url>
 
 # AliExpress (alias: ali)
 afilimax create aliexpress <url>
+
+# Magazine Luiza (alias: magalu, mlz, luiza)
+afilimax create magazine-luiza <url>
 ```
 
 ---
@@ -140,11 +144,18 @@ Flags disponíveis:
 - `-s, --app-secret <appSecret>` *(obrigatório)*: App Secret do AliExpress Open Platform.
 - `-t, --tracking-id <trackingId>` *(obrigatório)*: Tracking ID para atribuição das vendas.
 
+#### 🔵 Magazine Luiza (Parceiro Magalu)
+```bash
+afilimax config magazine-luiza
+# ou aliases: afilimax config magalu | mlz | luiza
+```
+*Solicita o Slug/Nome da loja do afiliado e em seguida os cookies de sessão.*
+
 ---
 
-## 🍪 Métodos de Captura de Cookies (Amazon & Mercado Livre)
+## 🍪 Métodos de Captura de Cookies (Amazon, Mercado Livre & Magazine Luiza)
 
-Para as plataformas que necessitam de sessão ativa (Amazon e Mercado Livre), a CLI oferece duas abordagens:
+Para as plataformas que necessitam de sessão ativa (Amazon, Mercado Livre e Magazine Luiza), a CLI oferece duas abordagens:
 
 ### Opção 1: Extensão do Chrome (Recomendada)
 1. Instale a extensão no Chrome: [Export Cookie JSON File](https://chromewebstore.google.com/detail/export-cookie-json-file-f/nmckokihipjgplolmcmjakknndddifde).

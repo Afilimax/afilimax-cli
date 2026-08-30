@@ -13,7 +13,7 @@
 - **Language:** TypeScript 7+
 - **Runtime / Executable:** Node.js, TSX (`tsx ./src/index.ts`)
 - **CLI Framework:** [Commander.js](https://github.com/tj/commander.js)
-- **Providers Integration:** `@afilimax/amazon-browser-provider`, `@afilimax/mercado-livre-provider`, `@afilimax/shopee-provider`, `@afilimax/aliexpress-provider`, `@afilimax/core`
+- **Providers Integration:** `@afilimax/amazon-browser-provider`, `@afilimax/mercado-livre-provider`, `@afilimax/shopee-provider`, `@afilimax/aliexpress-provider`, `@afilimax/magazine-luiza-provider`, `@afilimax/core`
 - **Automation / Scraping:** Puppeteer (`puppeteer-extra`, `puppeteer-extra-plugin-stealth`)
 - **Logging & Formatting:** [Winston](https://github.com/winstonjs/winston) with custom ANSI colorized helpers
 - **Interactive Prompts:** `readline-sync`
@@ -34,7 +34,8 @@ cli/
 │   │   │   ├── amazon.ts             # 'create amazon <url>' (alias 'amz')
 │   │   │   ├── mercado-livre.ts      # 'create mercado-livre <url>' (alias 'ml')
 │   │   │   ├── shopee.ts             # 'create shopee <url>' (alias 'sh')
-│   │   │   └── aliexpress.ts         # 'create aliexpress <url>' (alias 'ali')
+│   │   │   ├── aliexpress.ts         # 'create aliexpress <url>' (alias 'ali')
+│   │   │   └── magazine-luiza.ts     # 'create magazine-luiza <url>' (alias 'magalu', 'mlz', 'luiza')
 │   │   └── config/                   # Configuration management commands
 │   │       ├── index.ts              # 'config' command group
 │   │       ├── show.ts               # 'config show' (alias 'ls') command
@@ -44,9 +45,13 @@ cli/
 │   │       │   ├── index.ts          # Command definition
 │   │       │   ├── action.ts         # Command execution flow & prompts
 │   │       │   └── cookie-collector.ts # Extension JSON & browser cookie collection logic
-│   │       └── mercado-livre/        # 'config mercado-livre' (alias 'ml') command
+│   │       ├── mercado-livre/        # 'config mercado-livre' (alias 'ml') command
+│   │       │   ├── index.ts          # Command definition
+│   │       │   ├── action.ts         # Command execution flow & tag prompts
+│   │       │   └── cookie-collector.ts # Extension JSON & browser cookie collection logic
+│   │       └── magazine-luiza/       # 'config magazine-luiza' (alias 'magalu', 'mlz', 'luiza') command
 │   │           ├── index.ts          # Command definition
-│   │           ├── action.ts         # Command execution flow & tag prompts
+│   │           ├── action.ts         # Command execution flow & slug prompts
 │   │           └── cookie-collector.ts # Extension JSON & browser cookie collection logic
 │   └── helpers/                      # Helper modules
 │       ├── cli-banner.helper.ts      # Single-line ANSI Shadow ASCII banner renderer with repo links
