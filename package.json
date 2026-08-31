@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@afilimax/aliexpress-provider": "^0.1.0",
-    "@afilimax/amazon-browser-provider": "^0.1.0",
+    "@afilimax/amazon-browser-provider": "^0.1.1",
     "@afilimax/core": "^0.4.1",
     "@afilimax/magazine-luiza-provider": "^0.1.0",
     "@afilimax/mercado-livre-provider": "^0.1.3",
