@@ -1,6 +1,6 @@
 {
   "name": "@afilimax/cli",
-  "description": "CLI para geração de links de afiliados: Amazon, Mercado Livre, Shopee e AliExpress",
+  "description": "CLI para geração de links de afiliados: Amazon, Mercado Livre, Magazine Luiza, Shopee e AliExpress",
   "version": "0.1.0",
   "type": "commonjs",
   "repository": {
